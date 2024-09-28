@@ -10,23 +10,24 @@ import (
 
 var Config *datatype.Configuration
 
-func NewConfig()  (*datatype.Configuration,error){
-  viper.AddConfigPath("internal/config")
-  viper.SetConfigName("config")
-  viper.SetConfigType("yaml")
-  viper.AutomaticEnv()
-  viper.SetEnvKeyReplacer(strings.NewReplacer(`.`,`_`))
+func NewConfig() (*datatype.Configuration, error) {
+    viper.AddConfigPath("internal/config")  // Path to look for the config file
+    viper.SetConfigName("config")           // Config file name (without extension)
+    viper.SetConfigType("yaml")             // Config file type
+    viper.AutomaticEnv()                    // Automatic environment variable binding
+    viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_")) // Replacer for env variables
 
-  err :=viper.ReadInConfig() 
-  if err != nil {
-	  	return nil, fmt.Errorf("error loading config file: %s", err)
-	}
+    err := viper.ReadInConfig() // Read config file
+    if err != nil {
+        return nil, fmt.Errorf("error loading config file: %s", err)
+    }
 
-	err = viper.Unmarshal(&Config)
-	if err != nil {
-		return nil, fmt.Errorf("error reading config file: %s", err)
-	}
+    Config = &datatype.Configuration{} // Initialize the Config variable
 
-	return Config, nil
+    err = viper.Unmarshal(Config) // Unmarshal config into struct
+    if err != nil {
+        return nil, fmt.Errorf("error reading config file: %s", err)
+    }
 
+    return Config, nil
 }

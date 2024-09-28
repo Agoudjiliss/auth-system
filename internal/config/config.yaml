@@ -1,12 +1,11 @@
 server:
   Host: "localhost"
   Port: "8080"
-database:
+db:
   User: "issamagoudjil"
   Password: "agoudjil"
   Dbname: "auth-system-db"
   Sslmode: "disable"
-
 jwt:
-  Jwtkey: ""
+  Jwtkey: "agoudjilissamtest123test"
 

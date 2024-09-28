@@ -5,9 +5,9 @@ import(
 
 type User struct{
    Id int64 
-   UserName string
-   Password string
-   role string
+   UserName string `json:"username"`
+   Password string `json:"password"`
+   role string 
    Token struct{
      Token string
      Expires_at string
@@ -15,11 +15,11 @@ type User struct{
 }
 
 type Configuration struct{
-  Serverconfig struct{
+  Server struct{
     Host string
     Port string
   }
-  Dbconfig struct{
+  Db struct{
     User string
     Password string
     Dbname string

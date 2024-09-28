@@ -10,5 +10,6 @@ func Routing() *chi.Mux{
   r := chi.NewRouter()
   r.Use(middleware.Logger)
   r.Get("/ping",ping)
+  r.Put("/createuser",CreateUser)
   return r
 }

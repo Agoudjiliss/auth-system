@@ -4,20 +4,35 @@ import (
   "database/sql"
   _"github.com/lib/pq"
   "github.com/agoudjiliss/auth-system/internal/config"
+  "fmt"
 )
 var db *sql.DB
 
-func connectiontodb()(*sql.DB ,error){
-  cnxstr := "user = "+config.Config.Dbconfig.User+" password ="+config.Config.Dbconfig.Password+" dbname ="+config.Config.Dbconfig.Dbname+" sslmode ="+config.Config.Dbconfig.Sslmode
-  db,err := sql.Open("postgres",string(cnxstr))
-  if err != nil{
-    return nil,err
-  }
-  return db,nil 
+
+func Connectiontodb() (*sql.DB, error) {
+    config,err := config.NewConfig()
+    cnxstr := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s",
+        config.Db.User,
+        config.Db.Password,
+        config.Db.Dbname,
+        config.Db.Sslmode,
+    )
+    
+    db, err = sql.Open("postgres", cnxstr)
+    if err != nil {
+        return nil, err
+    }
+
+    // Ping the database to ensure the connection is established
+    if err := db.Ping(); err != nil {
+        return nil, err
+    }
+
+    return db, nil
 }
 
 func CreateUserTable(db *sql.DB) error{
-  query := `CREATE TABLE users (
+  query := `CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
     password TEXT NOT NULL,
@@ -33,7 +48,7 @@ func CreateUserTable(db *sql.DB) error{
 }
 
 func CreateTokentable(db *sql.DB) error{
-  query := `CREATE TABLE refresh_tokens (
+  query := `CREATE TABLE IF NOT EXISTS refresh_tokens (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     token TEXT NOT NULL,

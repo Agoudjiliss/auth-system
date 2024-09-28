@@ -1,36 +1,33 @@
 package database
 import (
   "github.com/agoudjiliss/auth-system/data"
+  "time"
 )
 
+func InsertUser(user datatype.User) (int64, error) {
+	// Correct SQL query
+	query := "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id"
 
-func InsertUser(user datatype.User) error{
-  query :="INSERT INTO users (username,password,) VALUES ($1,$2)"
-  _,err := db.Exec(query,user.UserName,user.Password)
-  if err != nil {
-    return err
-  }
-  return nil
+	// Variable to hold the new user's ID
+	var userID int64
+
+	// Execute the query and return the new user's ID
+	err := db.QueryRow(query, user.UserName, user.Password).Scan(&userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return userID, nil
 }
 
 
-func InsertToken(user datatype.User)error{
-  query :="INSERT INTO refresh_tokens (user_id, token, expires_at)VALUES ($1,$2,$3);"
+func InsertToken(userID int, token string, expiresAt time.Time) error {
+	query := "INSERT INTO refresh_tokens (user_id, token, expires_at) VALUES ($1, $2, $3);"
 
-  _,err := db.Exec(query,user.Id,user.Token.Token,user.Token.Expires_at)
-  if err != nil{
-    return err
-  }
-  return nil
-}
-
-func SelectID(user datatype.User) (datatype.User,error){
-  query :="SELECT id FROM users WHERE username = $1"
-  err := db.QueryRow(query,user.UserName).Scan(&user.Id)
-  if err != nil{
-    return user ,err
-
-  }
-  return user,nil
+	_, err := db.Exec(query, userID, token, expiresAt)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
