@@ -1,5 +1,3 @@
-Here’s a sample `README.md` for your Go authentication project. You can customize it as needed:
-
 ```markdown
 # Go JWT Authentication System
 
