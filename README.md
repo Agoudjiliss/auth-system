@@ -125,5 +125,3 @@ jwt:
 - Replace placeholders like `yourusername`, `your_db_user`, and `your_jwt_secret_key` with appropriate values related to your project.
 - You can add sections for troubleshooting, contributing, or more detailed examples of each endpoint if needed.
 - Consider including a **Contributing** section if you want others to contribute to your project. 
-
-Feel free to ask if you need any changes or additional sections!
