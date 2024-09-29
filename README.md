@@ -87,7 +87,7 @@ jwt:
     ```
   - Description: Registers a new user.
 
-- **POST /login**
+- **POST /connect**
   - Request body:
     ```json
     {
