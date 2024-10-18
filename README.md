@@ -1,4 +1,3 @@
-```markdown
 # Go JWT Authentication System
 
 This project implements a simple JWT authentication system in Go, featuring user registration, login, and token management. The application utilizes PostgreSQL for data storage and includes middleware for protecting routes.
@@ -117,9 +116,6 @@ jwt:
    - **Method**: `GET`
    - **URL**: `http://localhost:8080/hello`
    - Postman will automatically include the cookie set during login.
-
-
-```
 
 ### Notes
 - Replace placeholders like `yourusername`, `your_db_user`, and `your_jwt_secret_key` with appropriate values related to your project.
